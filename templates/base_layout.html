@@ -1,28 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Articles</title>
-    <link rel='stylesheet' href="{% static 'styles.css'%}">
-</head>
-<body>
-    <div class="wrapper">
-        <h1><a href="{% url 'articles:list'%}">CYBERSPACE</a></h1>
-        <nav>
-            <ul>
-                <li>
-                    <form action="{% url 'accounts:logout'%}" class="logout-link" method="POST">
-                        {%csrf_token%}
-                        <button type="submit">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
-        {%block content%}
-        {%endblock%}
-    </div>
+    <link rel="stylesheet" href="{% static 'styles.css'%}" />
+  </head>
+  <body>
+    <header class="wrapper">
+      <h1><a href="{% url 'home'%}">CYBERSPACE</a></h1>
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+          <li>
+            <form
+              action="{% url 'accounts:logout'%}"
+              class="logout-link"
+              method="POST"
+            >
+              {%csrf_token%}
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+          <li>
+            <a href="{%url 'articles:create'%}" class="highlight"
+              >New article</a
+            >
+          </li>
+          {% else %}
+          <li><a href="{% url 'accounts:login'%}">Login</a></li>
+          <li><a href="{% url 'accounts:signup'%}">Sigup</a></li>
 
-</body>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <div class="wrapper">{%block content%} {%endblock%}</div>
+  </body>
 </html>

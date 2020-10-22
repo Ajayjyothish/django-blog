@@ -18,12 +18,12 @@ from django.urls import path,include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-
+from articles import views as article_viwes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', views.about),
-    path("", views.home),
+    path("", article_viwes.article_list, name='home'),
     path('articles/', include('articles.urls')),
     path('accounts/', include('accounts.urls')),
 ]
